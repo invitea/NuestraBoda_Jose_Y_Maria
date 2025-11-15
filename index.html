@@ -872,6 +872,19 @@
         font-size: 16px;
         margin-top: 15px;
       }
+      
+      .child-name{ 
+        font-size:40px;
+      }
+      .event-title .first-word {
+        font-size: 42px;
+      }
+      .event-title .second-word {
+        font-size: 30px;
+      }
+      .decoration {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -1444,8 +1457,333 @@
         new Date().toLocaleString('es-MX', { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
     });
 
-    // El resto del código para el modal de confirmación permanece igual...
-    // ... (código del modal de confirmación se mantiene igual)
+    // Código para el modal de confirmación de asistencia
+    (function(){
+      const openBtn = document.getElementById('openRsvp');
+      const modal = document.getElementById('rsvpModal');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const form = document.getElementById('rsvpForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      const thankYou = document.getElementById('thankYouMessage');
+      let previousFocus = null;
+
+      // Elementos del formulario
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const phoneInput = document.getElementById('phone');
+      const adultsInput = document.getElementById('adults');
+      const childrenInput = document.getElementById('children');
+      
+      // Mensajes de error
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const emailDuplicateError = document.getElementById('emailDuplicateError');
+      const phoneError = document.getElementById('phoneError');
+      const adultsError = document.getElementById('adultsError');
+      const childrenError = document.getElementById('childrenError');
+
+      // Función para validar email
+      function isValidEmail(email) {
+        if (!email) return true; // Email es opcional
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      // Función para validar teléfono (formato mexicano: 10 dígitos)
+      function isValidPhone(phone) {
+        if (!phone) return true; // Teléfono es opcional
+        // Remover caracteres no numéricos
+        const cleanPhone = phone.replace(/\D/g, '');
+        return cleanPhone.length === 10;
+      }
+
+      // Función para formatear teléfono con nueva máscara (XX) XXXX-XXXX
+      function formatPhoneNumber(value) {
+        // Remover todo excepto números
+        const numbers = value.replace(/\D/g, '');
+        
+        // Aplicar formato (XX) XXXX-XXXX
+        if (numbers.length <= 2) {
+          return numbers;
+        } else if (numbers.length <= 6) {
+          return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+        } else {
+          return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6, 10)}`;
+        }
+      }
+
+      // Función para verificar si el correo ya existe en la base de datos
+      async function checkEmailExists(email) {
+        if (!email || !isValidEmail(email)) return false;
+        
+        try {
+          const snapshot = await window.db.collection('jimenalopezgaona_panel')
+            .where('email', '==', email.toLowerCase().trim())
+            .get();
+          
+          return !snapshot.empty;
+        } catch (error) {
+          console.error('Error al verificar correo:', error);
+          return false;
+        }
+      }
+
+      // Función para mostrar errores de forma más clara
+      function showError(input, errorElement, message) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        input.classList.add('error');
+        input.focus();
+      }
+
+      // Función para limpiar errores
+      function clearError(input, errorElement) {
+        errorElement.style.display = 'none';
+        input.classList.remove('error', 'warning');
+      }
+
+      // Event listener para formatear teléfono en tiempo real
+      phoneInput.addEventListener('input', function(e) {
+        const formatted = formatPhoneNumber(e.target.value);
+        e.target.value = formatted;
+        
+        // Validar y mostrar/ocultar error
+        if (e.target.value && !isValidPhone(e.target.value)) {
+          showError(phoneInput, phoneError, 'Por favor ingresa un número telefónico válido (10 dígitos)');
+        } else {
+          clearError(phoneInput, phoneError);
+        }
+      });
+
+      // Validación en tiempo real para email
+      emailInput.addEventListener('blur', async function(e) {
+        const email = e.target.value.trim();
+        
+        if (email && !isValidEmail(email)) {
+          showError(emailInput, emailError, 'Por favor ingresa un correo electrónico válido');
+          emailDuplicateError.style.display = 'none';
+          return;
+        }
+        
+        if (email && isValidEmail(email)) {
+          const emailExists = await checkEmailExists(email);
+          if (emailExists) {
+            emailDuplicateError.style.display = 'block';
+            emailError.style.display = 'none';
+            emailInput.classList.add('warning');
+            emailInput.classList.remove('error');
+          } else {
+            clearError(emailInput, emailError);
+            emailDuplicateError.style.display = 'none';
+          }
+        } else {
+          clearError(emailInput, emailError);
+          emailDuplicateError.style.display = 'none';
+        }
+      });
+
+      // Validación en tiempo real para nombre
+      nameInput.addEventListener('blur', function(e) {
+        if (e.target.value.length < 3) {
+          showError(nameInput, nameError, 'Por favor ingresa tu nombre completo (mínimo 3 caracteres)');
+        } else {
+          clearError(nameInput, nameError);
+        }
+      });
+
+      // Validación en tiempo real para adultos
+      adultsInput.addEventListener('blur', function(e) {
+        if (e.target.value < 1) {
+          showError(adultsInput, adultsError, 'Debe haber al menos 1 adulto');
+        } else {
+          clearError(adultsInput, adultsError);
+        }
+      });
+
+      // Validación en tiempo real para niños
+      childrenInput.addEventListener('blur', function(e) {
+        if (e.target.value < 0) {
+          showError(childrenInput, childrenError, 'El número de niños no puede ser negativo');
+        } else {
+          clearError(childrenInput, childrenError);
+        }
+      });
+
+      function openModal(){
+        previousFocus = document.activeElement;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(()=>{ nameInput.focus(); }, 50);
+        document.addEventListener('keydown', handleKey);
+      }
+      
+      function closeModal(){
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', handleKey);
+        setTimeout(()=>{
+          thankYou.style.display = 'none';
+          form.style.display = '';
+          form.reset();
+          adultsInput.value = 1;
+          childrenInput.value = 0;
+          
+          // Limpiar errores
+          [nameError, emailError, emailDuplicateError, phoneError, adultsError, childrenError].forEach(error => {
+            error.style.display = 'none';
+          });
+          [nameInput, emailInput, phoneInput, adultsInput, childrenInput].forEach(input => {
+            input.classList.remove('error', 'warning');
+          });
+          
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar confirmación';
+          loadingSpinner.style.display = 'none';
+          previousFocus?.focus?.();
+        }, 200);
+      }
+      
+      function handleKey(e){ 
+        if (e.key === 'Escape') closeModal(); 
+        // Mejor navegación por teclado en el modal
+        if (e.key === 'Tab' && modal.classList.contains('active')) {
+          const focusableElements = modal.querySelectorAll('button, input, textarea, select, a[href]');
+          const firstElement = focusableElements[0];
+          const lastElement = focusableElements[focusableElements.length - 1];
+          
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              lastElement.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              firstElement.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      }
+
+      modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal(); });
+      openBtn.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
+      closeBtn.addEventListener('click', closeModal);
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        if (!window.db) { 
+          alert('Base de datos no disponible. Por favor, intenta más tarde.'); 
+          return; 
+        }
+        
+        // Validar todos los campos
+        let isValid = true;
+        
+        // Validar nombre
+        if (nameInput.value.length < 3) {
+          showError(nameInput, nameError, 'Por favor ingresa tu nombre completo (mínimo 3 caracteres)');
+          isValid = false;
+        }
+        
+        // Validar email
+        const email = emailInput.value.trim();
+        if (email && !isValidEmail(email)) {
+          showError(emailInput, emailError, 'Por favor ingresa un correo electrónico válido');
+          isValid = false;
+        }
+        
+        // Verificar si el correo ya existe
+        if (email && isValidEmail(email)) {
+          const emailExists = await checkEmailExists(email);
+          if (emailExists) {
+            emailDuplicateError.style.display = 'block';
+            emailError.style.display = 'none';
+            emailInput.classList.add('warning');
+            isValid = false;
+          }
+        }
+        
+        // Validar teléfono
+        if (phoneInput.value && !isValidPhone(phoneInput.value)) {
+          showError(phoneInput, phoneError, 'Por favor ingresa un número telefónico válido (10 dígitos)');
+          isValid = false;
+        }
+        
+        // Validar adultos
+        if (adultsInput.value < 1) {
+          showError(adultsInput, adultsError, 'Debe haber al menos 1 adulto');
+          isValid = false;
+        }
+        
+        // Validar niños
+        if (childrenInput.value < 0) {
+          showError(childrenInput, childrenError, 'El número de niños no puede ser negativo');
+          isValid = false;
+        }
+        
+        if (!isValid) {
+          // Enfocar el primer campo con error
+          const firstError = form.querySelector('.error, .warning');
+          if (firstError) firstError.focus();
+          return;
+        }
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+        loadingSpinner.style.display = 'block';
+
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value;
+        const adults = Number(adultsInput.value) || 0;
+        const children = Number(childrenInput.value) || 0;
+        const userAgent = navigator.userAgent || '';
+        const screenSize = `${window.innerWidth}x${window.innerHeight}`;
+
+        try {
+          // Guardar en la colección jimenalopezgaona_panel
+          await window.db.collection('jimenalopezgaona_panel').add({
+            nombre: name,
+            email: email || 'No proporcionado',
+            telefono: phone || 'No proporcionado',
+            adultos: adults,
+            ninos: children,
+            dispositivo: userAgent,
+            pantalla: screenSize,
+            fecha: new Date().toLocaleString('es-MX'),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+          form.style.display = 'none';
+          thankYou.style.display = 'block';
+          loadingSpinner.style.display = 'none';
+          setTimeout(closeModal, 1800);
+        } catch(err){
+          console.error('Error al guardar en Firebase:', err);
+          alert('Ocurrió un error al guardar. Por favor, intenta nuevamente.');
+          submitBtn.disabled=false;
+          submitBtn.textContent='Enviar confirmación';
+          loadingSpinner.style.display='none';
+        }
+      });
+
+      // Mejor experiencia móvil
+      document.addEventListener('DOMContentLoaded', ()=>{
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input=>{
+          input.addEventListener('touchstart', (ev)=>ev.stopPropagation(), { passive: true });
+          input.addEventListener('focus', ()=> {
+            // Scroll suave para inputs en móvil
+            if (window.innerWidth < 768) {
+              setTimeout(() => {
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }, 300);
+            }
+          });
+        });
+      });
+    })();
   </script>
 </body>
 </html>
