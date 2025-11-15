@@ -1,447 +1,1451 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Primera Comunión y Cumpleaños</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Primera Comunión y Cumpleaños — Jimena</title>
+
+  <!-- Fuentes originales -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet" />
+
   <style>
-    /* Estilos generales optimizados para iPhone */
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+    :root{
+      /* mantengo tu paleta exactamente */
+      --bg: #f9f5f1;
+      --card-bg: #ffffff;
+      --muted: #f0e6d6;
+      --accent: #8e6c88;
+      --accent-2: rgba(142,108,136,0.9);
+      --map-btn: rgba(107,142,122,0.9);
+      --text: #444;
+      --muted-text: #777;
+      --shadow: rgba(0,0,0,0.10);
+      --focus-ring: rgba(142,108,136,0.18);
+      --error: #d32f2f;
+      --warning: #f57c00;
+      --success: #388e3c;
+
+      /* variables de layout (homologadas con Batman template) */
+      --max-width: 1000px;
+      --container-padding: 18px;
     }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #f9f5f1;
-      margin: 0;
-      padding: 0;
-      color: #444;
-      -webkit-text-size-adjust: 100%;
-    }
-    .invitation-container {
-      max-width: 100%;
-      margin: 0 auto;
-      text-align: center;
-      background: white;
-      min-height: 100vh;
+
+    /* reset / accesibilidad */
+    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      -webkit-text-size-adjust:100%;
       position: relative;
+      overflow-x: hidden;
     }
-    .header-section {
-      padding: 20px 15px 0;
-      background: linear-gradient(to bottom, #f9f5f1, white 30%);
+
+    /* Efectos decorativos de fondo */
+    .decoration {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.08;
     }
-    .communion-image {
-      width: 85%;
-      max-width: 280px;
-      margin: 0 auto 15px;
-      border-radius: 6px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    .decoration.circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      top: 10%;
+      right: 10%;
     }
-    .invitation-heading {
-      font-size: 14px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #8e6c88;
-      margin-bottom: 5px;
+    .decoration.flower {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, var(--accent) 20%, transparent 20%),
+                  radial-gradient(circle, transparent 20%, var(--accent) 20%, transparent 30%),
+                  radial-gradient(circle, var(--accent) 10%, transparent 10%);
+      background-size: 20px 20px, 40px 40px, 20px 20px;
+      background-position: 0 0, 20px 20px, 0 40px;
+      bottom: 15%;
+      left: 8%;
+      transform: rotate(25deg);
     }
-    .first-word {
-      font-family: 'Parisienne', cursive;
-      font-size: 50px;
-      color: #8e6c88;
-      line-height: 1;
-      display: block;
+
+    /* container homologado */
+    .invitation-container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      min-height:100vh;
+      background:var(--card-bg);
+      text-align:center;
+      box-shadow:0 6px 18px var(--shadow);
+      position: relative;
+      z-index: 1;
     }
-    .second-word {
-      font-family: 'Parisienne', cursive;
-      font-size: 36px;
-      color: #8e6c88;
-      margin-top: -8px;
-      display: block;
+
+    .header-section{
+      padding:20px 16px 6px;
+      background: linear-gradient(to bottom, var(--bg), var(--card-bg) 30%);
+      position: relative;
+      overflow: hidden;
     }
-    .child-name {
-      font-family: 'Parisienne', cursive;
-      font-size: 48px;
-      color: #8e6c88;
-      margin: 5px 0 10px;
-      line-height: 1.1;
+
+    .header-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--accent), var(--map-btn), var(--accent));
     }
-    .event-date {
-      font-size: 15px;
-      text-transform: uppercase;
-      font-weight: 500;
-      color: #5a4a5a;
-      padding: 12px 0;
-      border-top: 1px solid #f0e6d6;
-      border-bottom: 1px solid #f0e6d6;
-      max-width: 90%;
-      margin: 20px auto;
-      letter-spacing: 0.5px;
-    }
-    .event-card {
-      max-width: 90%;
-      margin: 15px auto;
-      padding: 15px 0;
-      background: rgba(240,230,214,0.15);
-      border-top: 1px solid #f0e6d6;
-      border-bottom: 1px solid #f0e6d6;
-    }
-    .event-type {
-      font-weight: 600;
-      font-size: 14px;
-      color: #3a2e3a;
-      margin-bottom: 3px;
-    }
-    .event-time {
-      font-size: 14px;
-      color: #5a5a5a;
-      margin-bottom: 5px;
-    }
-    .event-location {
-      font-style: italic;
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    .map-button, .confirm-button {
-      padding: 12px 25px;
-      border-radius: 25px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      transition: all 0.3s ease;
-      margin: 10px auto;
+
+    .invitation-heading{
+      font-size:14px;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      color:var(--accent);
+      margin-bottom:6px;
+      position: relative;
       display: inline-block;
-      width: auto;
-      min-width: 180px;
     }
-    .map-button {
-      background-color: rgba(107, 142, 122, 0.9);
-      color: white;
+
+    .invitation-heading::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 25%;
+      right: 25%;
+      height: 1px;
+      background: var(--muted);
     }
-    .confirm-button {
-      background-color: rgba(142, 108, 136, 0.9);
-      color: white;
-      margin-bottom: 30px;
+
+    .event-title {
+      position: relative;
+      margin: 10px 0;
     }
-    .map-button:active, .confirm-button:active {
-      transform: scale(0.96);
+
+    .event-title .first-word{ 
+      font-family:'Parisienne',cursive; 
+      font-size:50px; 
+      color:var(--accent); 
+      display:block; 
+      line-height:1;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      animation: fadeInUp 0.8s ease-out;
+    }
+    .event-title .second-word{ 
+      font-family:'Parisienne',cursive; 
+      font-size:36px; 
+      color:var(--accent); 
+      display:block; 
+      margin-top:-8px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .communion-image{
+      width:85%;
+      max-width:320px;
+      height:auto;
+      margin:10px auto 12px;
+      border-radius:8px;
+      object-fit:cover;
+      box-shadow:0 6px 20px var(--shadow);
+      display:block;
+      loading: lazy;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 3px solid var(--card-bg);
+      outline: 1px solid var(--muted);
+    }
+
+    .communion-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .child-name{
+      font-family:'Parisienne',cursive;
+      font-size:48px;
+      color:var(--accent);
+      margin:6px 0 10px;
+      line-height:1.05;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+      position: relative;
+      display: inline-block;
+    }
+
+    .child-name::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+    }
+
+    .content-section{ 
+      padding:0 16px 36px;
+      animation: fadeIn 1s ease-out 0.6s both;
+    }
+
+    .event-date{
+      font-size:15px;
+      text-transform:uppercase;
+      font-weight:500;
+      color:#5a4a5a;
+      padding:12px 0;
+      border-top:1px solid var(--muted);
+      border-bottom:1px solid var(--muted);
+      max-width:90%;
+      margin:18px auto;
+      letter-spacing:0.5px;
+      position: relative;
+      background: linear-gradient(to right, transparent, rgba(142,108,136,0.05), transparent);
+    }
+
+    /* Centrado aplicado: homologado para el template Batman */
+    .event-card{
+      max-width:92%;
+      margin:14px auto;
+      padding:14px 12px;
+      background: rgba(240,230,214,0.12);
+      border-top:1px solid var(--muted);
+      border-bottom:1px solid var(--muted);
+      border-radius:10px;
+      text-align:center;
+      display:block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    .event-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .event-type{ 
+      font-weight:600; 
+      font-size:14px; 
+      color:#3a2e3a; 
+      margin-bottom:6px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .event-type::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    .event-time{ 
+      font-size:14px; 
+      color:#5a5a5a; 
+      margin-bottom:8px;
+      font-weight: 500;
+    }
+
+    .event-location{ 
+      font-style:italic; 
+      font-size:13px; 
+      color:var(--muted-text); 
+      line-height:1.4; 
+      white-space:pre-line; 
+      text-align:center;
+    }
+
+    .map-button, .confirm-button, .gift-button{
+      display:inline-block;
+      margin:10px auto;
+      padding:12px 25px;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:500;
+      cursor:pointer;
+      border:none;
+      transition:all .18s ease;
+      min-width:160px;
+      text-decoration:none;
+      color:#fff;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .map-button::before, .confirm-button::before, .gift-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+      z-index: -1;
+    }
+
+    .map-button:hover::before, .confirm-button:hover::before, .gift-button:hover::before {
+      left: 100%;
+    }
+
+    .map-button, .gift-button { 
+      background:var(--map-btn);
+      box-shadow: 0 3px 8px rgba(107,142,122,0.3);
+    }
+    .map-button:hover, .gift-button:hover { 
+      transform:translateY(-2px);
+      box-shadow: 0 5px 12px rgba(107,142,122,0.4);
     }
     
-    /* Estilos del modal ultra compacto */
-    .modal {
+    .confirm-button{ 
+      background:var(--accent-2); 
+      margin-bottom:30px;
+      box-shadow: 0 3px 8px rgba(142,108,136,0.3);
+    }
+    .confirm-button:hover{ 
+      transform:translateY(-2px);
+      box-shadow: 0 5px 12px rgba(142,108,136,0.4);
+    }
+
+    /* Estilos para la cuenta regresiva */
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(142, 108, 136, 0.1);
+      border-radius: 8px;
+      padding: 10px 8px;
+      min-width: 60px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .countdown-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      color: var(--muted-text);
+      text-transform: uppercase;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .countdown-message {
+      font-size: 13px;
+      color: var(--accent);
+      font-style: italic;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Estilos para la galería Cover Flow mejorada */
+    .coverflow-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      margin: 25px 0 15px;
+      perspective: 1200px;
+      overflow: hidden;
+    }
+
+    .coverflow-track {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coverflow-item {
+      position: absolute;
+      width: 200px;
+      height: 260px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 
+        0 15px 35px rgba(0,0,0,0.2),
+        0 5px 15px rgba(0,0,0,0.1),
+        inset 0 0 1px rgba(255,255,255,0.5);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+      background: white;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .coverflow-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .coverflow-item:hover .coverflow-image {
+      transform: scale(1.08);
+    }
+
+    .coverflow-reflection {
+      position: absolute;
+      bottom: -80px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+      border-radius: 50%;
+      filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .coverflow-item.active .coverflow-reflection {
+      opacity: 0.6;
+    }
+
+    .coverflow-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0 10px;
+    }
+
+    .coverflow-nav-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: white;
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(142,108,136,0.2);
+    }
+
+    .coverflow-nav-button:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(142,108,136,0.4);
+    }
+
+    .coverflow-nav-button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+      background: white;
+      color: var(--accent);
+    }
+
+    .coverflow-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0 5px;
+    }
+
+    .coverflow-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .coverflow-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+      border-color: rgba(142,108,136,0.3);
+    }
+
+    .coverflow-dot:hover:not(.active) {
+      background: var(--accent-2);
+      transform: scale(1.1);
+    }
+
+    .coverflow-counter {
+      font-size: 14px;
+      color: var(--muted-text);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Modal para galería ampliada */
+    .gallery-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.95);
       display: flex;
-      justify-content: center;
       align-items: center;
-      z-index: 1000;
+      justify-content: center;
+      z-index: 2000;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-    .modal.active {
+
+    .gallery-modal.active {
       opacity: 1;
       pointer-events: all;
     }
-    .modal-content {
-      background: white;
-      padding: 18px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 280px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-      font-family: 'Montserrat', sans-serif;
-      border-top: 3px solid #8e6c88;
+
+    .gallery-modal-content {
       position: relative;
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
+      max-width: 90%;
+      max-height: 90%;
+      text-align: center;
     }
-    .modal.active .modal-content {
-      transform: translateY(0);
+
+    .gallery-modal-image {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-    .close-modal {
-      position: absolute;
-      top: 8px;
-      right: 8px;
+
+    .gallery-modal-caption {
+      color: white;
+      margin-top: 20px;
       font-size: 18px;
-      color: #8e6c88;
-      cursor: pointer;
-      background: none;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .gallery-modal-close {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      background: var(--accent);
+      color: white;
       border: none;
-      width: 22px;
-      height: 22px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
-    }
-    .modal-title {
-      margin-bottom: 15px;
-      font-family: 'Parisienne', cursive;
-      font-size: 22px;
-      color: #8e6c88;
-    }
-    .form-group {
-      margin-bottom: 15px;
-      text-align: left;
-    }
-    .form-label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 13px;
-      color: #5a4a5a;
-      font-weight: 500;
-    }
-    .modal-content input {
-      width: 100%;
-      background-color: #f9f5f1;
-      border: 1px solid #e0d5c8;
-      border-radius: 6px;
-      padding: 12px 15px;
-      font-family: 'Montserrat', sans-serif;
-      margin-bottom: 10px;
-      font-size: 14px;
-      -webkit-appearance: none;
-    }
-    .modal-content input:focus {
-      outline: none;
-      border-color: #8e6c88;
-      box-shadow: 0 0 0 2px rgba(142, 108, 136, 0.2);
-    }
-    .modal-content input::placeholder {
-      color: #5a4a5a;
-      opacity: 0.8;
-    }
-    .success {
-      font-family: 'Parisienne', cursive;
-      font-size: 20px;
-      color: #8e6c88;
-      margin: 15px 0;
-      text-align: center;
-      display: none;
-    }
-    .submit-btn {
-      width: 100%;
-      padding: 12px;
-      font-size: 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      border: none;
       transition: all 0.3s ease;
-      background-color: rgba(142, 108, 136, 0.9);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .gallery-modal-close:hover {
+      background: var(--accent-2);
+      transform: scale(1.1);
+    }
+
+    .gallery-modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(142,108,136,0.9);
       color: white;
-      font-weight: 500;
-      margin-top: 5px;
-    }
-    .submit-btn:active {
-      transform: scale(0.98);
-    }
-    .loading-spinner {
-      display: none;
-      width: 24px;
-      height: 24px;
-      margin: 10px auto;
-      border: 3px solid rgba(142, 108, 136, 0.3);
+      border: none;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
-      border-top-color: #8e6c88;
-      animation: spin 1s ease-in-out infinite;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+
+    .gallery-modal-nav:hover {
+      background: var(--accent);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .gallery-modal-prev {
+      left: 25px;
+    }
+
+    .gallery-modal-next {
+      right: 25px;
+    }
+
+    /* Modal homologado (misma estructura que Batman template) */
+    .modal{ 
+      position:fixed; 
+      top:0; 
+      left:0; 
+      width:100%; 
+      height:100%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      background:rgba(0,0,0,0.45); 
+      z-index:1000; 
+      opacity:0; 
+      pointer-events:none; 
+      transition:opacity .25s ease;
+    }
+    .modal.active{ 
+      opacity:1; 
+      pointer-events:all;
+    }
+    .modal-content{
+      position:relative;
+      width:92%; 
+      max-width:400px;
+      background:var(--card-bg);
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 8px 24px var(--shadow);
+      border-top:3px solid var(--accent);
+      transform:translateY(16px);
+      transition:transform .25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal.active .modal-content{ 
+      transform:translateY(0);
+    }
+
+    .close-modal{
+      position:absolute; 
+      top:10px; 
+      right:10px;
+      width:34px; 
+      height:34px; 
+      border-radius:6px;
+      display:flex; 
+      align-items:center; 
+      justify-content:center;
+      background:transparent; 
+      border:none; 
+      cursor:pointer;
+      color:var(--accent); 
+      font-size:18px; 
+      padding:0; 
+      z-index:3;
+      transition: background 0.2s;
+    }
+
+    .close-modal:hover {
+      background: rgba(142,108,136,0.1);
+    }
+
+    .modal-title{ 
+      font-family:'Parisienne',cursive; 
+      color:var(--accent); 
+      font-size:22px; 
+      margin:0 0 12px; 
+      text-align:center;
+    }
+
+    .form-group{ 
+      margin-bottom:12px; 
+      text-align:left;
+      position: relative;
+    }
+    .form-label{ 
+      display:block; 
+      margin-bottom:6px; 
+      font-size:13px; 
+      color:#5a4a5a; 
+      font-weight:500;
+    }
+    .modal-content input[type="text"], 
+    .modal-content input[type="number"],
+    .modal-content input[type="email"],
+    .modal-content input[type="tel"] {
+      width:100%; 
+      padding:10px 12px; 
+      border-radius:8px; 
+      border:1px solid #e0d5c8; 
+      background:#f9f5f1; 
+      font-size:14px;
+      transition: all 0.2s;
+    }
+    .modal-content input:focus{ 
+      outline:none; 
+      box-shadow:0 0 0 6px var(--focus-ring); 
+      border-color:var(--accent);
+    }
+    
+    .modal-content input.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 6px rgba(211, 47, 47, 0.1);
+    }
+    
+    .modal-content input.warning {
+      border-color: var(--warning);
+      box-shadow: 0 0 0 6px rgba(245, 124, 0, 0.1);
+    }
+    
+    .error-message {
+      color: var(--error);
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+    
+    .warning-message {
+      color: var(--warning);
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .submit-btn{ 
+      width:100%; 
+      padding:12px; 
+      border-radius:20px; 
+      border:none; 
+      background:var(--accent-2); 
+      color:#fff; 
+      font-weight:600; 
+      cursor:pointer; 
+      margin-top:6px;
+      transition: all 0.2s;
+    }
+    .submit-btn:hover:not([disabled]) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(142,108,136,0.4);
+    }
+    .submit-btn[disabled]{ 
+      opacity:0.6; 
+      cursor:not-allowed;
+    }
+
+    .loading-spinner{ 
+      display:none; 
+      width:24px; 
+      height:24px; 
+      margin:10px auto; 
+      border:3px solid rgba(142,108,136,0.28); 
+      border-top-color:var(--accent); 
+      border-radius:50%; 
+      animation:spin 1s linear infinite;
+    }
+    @keyframes spin{ 
+      to { 
+        transform:rotate(360deg); 
+      } 
+    }
+
+    .success{ 
+      font-family:'Parisienne',cursive; 
+      font-size:20px; 
+      color:var(--success); 
+      text-align:center; 
+      display:none; 
+      margin-top:12px;
+      animation: pulse 1.5s infinite;
+    }
+
+    footer{ 
+      text-align:center; 
+      padding:12px 6px; 
+      font-size:12px; 
+      color:#999; 
+      background:transparent;
+      border-top: 1px solid var(--muted);
+    }
+
+    :focus{ 
+      outline:3px solid var(--focus-ring); 
+      outline-offset:2px;
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(142,108,136,0.3); }
+      50% { box-shadow: 0 0 30px rgba(142,108,136,0.6); }
+    }
+
+    @media (max-width:768px){
+      .coverflow-container {
+        height: 280px;
+      }
+      
+      .coverflow-item {
+        width: 170px;
+        height: 220px;
+      }
+      
+      .gallery-modal-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+      
+      .gallery-modal-prev {
+        left: 15px;
+      }
+      
+      .gallery-modal-next {
+        right: 15px;
+      }
+      
+      .coverflow-nav-button {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width:480px){
+      .coverflow-container {
+        height: 240px;
+      }
+      
+      .coverflow-item {
+        width: 140px;
+        height: 180px;
+      }
+      
+      .coverflow-nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+      
+      .gallery-modal-caption {
+        font-size: 16px;
+        margin-top: 15px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Elementos decorativos de fondo -->
+  <div class="decoration circle"></div>
+  <div class="decoration flower"></div>
+
   <div class="invitation-container">
-    <div class="header-section">
+    <div class="header-section" role="banner">
       <div class="invitation-heading">Acompáñame a celebrar mi</div>
-      <div class="event-title">
+      <div class="event-title" aria-hidden="true">
         <span class="first-word">Primera Comunión</span>
         <span class="second-word">& mis 9 años</span>
       </div>
-      <img src="https://i.ibb.co/MyswS4v6/image.jpg" alt="Jimena en su Primera Comunión" class="communion-image">
+
+      <img class="communion-image" src="https://i.ibb.co/MyswS4v6/image.jpg" alt="Jimena en su Primera Comunión" loading="lazy" />
       <div class="child-name">Jimena López Gaona</div>
     </div>
-    <div class="content-section">
-      <div class="event-date">Sábado 26 de Julio de 2025</div>
-      <div class="event-card">
-        <div class="event-type">Ceremonia</div>
+
+    <div class="content-section" role="main">
+      <!-- Fecha dinámica (mañana) -->
+      <div class="event-date" id="dynamicDate" aria-label="Fecha del evento"></div>
+
+      <!-- Nueva sección: Cuenta Regresiva -->
+      <div class="event-card" aria-labelledby="cuenta-regresiva">
+        <div id="cuenta-regresiva" class="event-type">Cuenta Regresiva</div>
+        <div class="countdown-container">
+          <div class="countdown-item">
+            <div id="days" class="countdown-value">00</div>
+            <div class="countdown-label">Días</div>
+          </div>
+          <div class="countdown-item">
+            <div id="hours" class="countdown-value">00</div>
+            <div class="countdown-label">Horas</div>
+          </div>
+          <div class="countdown-item">
+            <div id="minutes" class="countdown-value">00</div>
+            <div class="countdown-label">Minutos</div>
+          </div>
+          <div class="countdown-item">
+            <div id="seconds" class="countdown-value">00</div>
+            <div class="countdown-label">Segundos</div>
+          </div>
+        </div>
+        <div id="countdown-message" class="countdown-message"></div>
+      </div>
+
+      <!-- Nueva sección: Galería Cover Flow Mejorada -->
+      <div class="event-card" aria-labelledby="galeria">
+        <div id="galeria" class="event-type">Galería</div>
+        <div class="event-location">Momentos especiales de preparación</div>
+        
+        <div class="coverflow-container">
+          <div class="coverflow-track" id="coverflowTrack">
+            <!-- Las imágenes se insertarán dinámicamente -->
+          </div>
+        </div>
+        
+        <div class="coverflow-nav">
+          <button class="coverflow-nav-button" id="coverflowPrev" aria-label="Imagen anterior">‹</button>
+          <button class="coverflow-nav-button" id="coverflowNext" aria-label="Imagen siguiente">›</button>
+        </div>
+        
+        <div class="coverflow-dots" id="coverflowDots">
+          <!-- Los dots se insertarán dinámicamente -->
+        </div>
+        
+        <div class="coverflow-counter" id="coverflowCounter">1 / 7</div>
+      </div>
+
+      <div class="event-card" aria-labelledby="ceremonia">
+        <div id="ceremonia" class="event-type">Ceremonia</div>
         <div class="event-time">13:00 hrs</div>
-        <div class="event-location">Parroquia<br>Nuestra Señora de Guadalupe</div>
-        <button class="map-button" onclick="getLocationAndNavigate('Parroquia+Nuestra+Señora+de+Guadalupe,+8WP9+MV,+Ciudad+de+México')">Cómo llegar</button>
+        <div class="event-location">Parroquia Nuestra Señora de Guadalupe<br/>Estrella 38, San Juan Xalpa,<br/>Iztapalapa, 09850 Ciudad de México, CDMX</div>
+        <a class="map-button" href="https://www.google.com/maps/search/?api=1&query=Estrella%2038%2C%20San%20Juan%20Xalpa%2C%20Iztapalapa%2C%2009850%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
       </div>
-      <div class="event-card">
-        <div class="event-type">Recepción</div>
+
+      <div class="event-card" aria-labelledby="recepcion">
+        <div id="recepcion" class="event-type">Recepción</div>
         <div class="event-time">15:00 hrs</div>
-        <div class="event-location">Salón de Fiestas<br>El Arca de los Niños</div>
-        <button class="map-button" onclick="getLocationAndNavigate('Salón+de+Fiestas+El+Arca+de+los+Niños,+8WP9+MV,+Ciudad+de+México')">Cómo llegar</button>
+        <div class="event-location">Salón de Fiestas "El Arca de los Niños"<br/>5 de Mayo núm. 31, Col. Los Reyes Culhuacán,<br/>Iztapalapa, Ciudad de México, CDMX</div>
+        <a class="map-button" href="https://www.google.com/maps/search/?api=1&query=El%20Arca%20de%20los%20Ni%C3%B1os%2C%205%20de%20Mayo%20n%C3%BAm.%2031%2C%20Col.%20Los%20Reyes%20Culhuac%C3%A1n%2C%20Iztapalapa%2C%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
       </div>
-      
-      <button class="confirm-button" onclick="openModal()">Confirma asistencia</button>
+
+      <!-- Nueva sección: Mesa de Regalos -->
+      <div class="event-card" aria-labelledby="regalos">
+        <div id="regalos" class="event-type">Mesa de Regalos</div>
+        <div class="event-location">Si deseas tener un detalle conmigo, puedes visitar mi mesa de regalos en Liverpool</div>
+        <a class="gift-button" href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51780014" target="_blank" rel="noopener noreferrer">Ver Regalos</a>
+      </div>
+
+      <button class="confirm-button" id="openRsvp" aria-haspopup="dialog">Confirma asistencia</button>
     </div>
   </div>
 
-  <!-- Modal con labels externos -->
-  <div id="rsvpModal" class="modal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="closeModal()">&times;</button>
-      <div class="modal-title">Confirma tu asistencia</div>
-      <form id="rsvpForm">
+  <!-- Modal para galería ampliada -->
+  <div id="galleryModal" class="gallery-modal">
+    <div class="gallery-modal-content">
+      <button class="gallery-modal-close" id="closeGalleryModal">&times;</button>
+      <button class="gallery-modal-nav gallery-modal-prev" id="modalPrev">‹</button>
+      <button class="gallery-modal-nav gallery-modal-next" id="modalNext">›</button>
+      <img id="galleryModalImage" class="gallery-modal-image" src="" alt="">
+      <div id="galleryModalCaption" class="gallery-modal-caption"></div>
+    </div>
+  </div>
+
+  <!-- Modal homologado -->
+  <div id="rsvpModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+    <div class="modal-content" role="document">
+      <button class="close-modal" id="closeModalBtn" aria-label="Cerrar">&times;</button>
+      <div id="modalTitle" class="modal-title">Confirma tu asistencia</div>
+
+      <form id="rsvpForm" novalidate>
         <div class="form-group">
           <label for="name" class="form-label">Nombre(s) y apellido(s):</label>
-          <input type="text" id="name" required>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+          <div class="error-message" id="nameError">Por favor ingresa tu nombre completo (mínimo 3 caracteres)</div>
         </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Correo electrónico:</label>
+          <input id="email" name="email" type="email" autocomplete="email" />
+          <div class="error-message" id="emailError">Por favor ingresa un correo electrónico válido</div>
+          <div class="warning-message" id="emailDuplicateError">Este correo electrónico ya ha confirmado asistencia</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-label">Número telefónico:</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(XX) XXXX-XXXX" />
+          <div class="error-message" id="phoneError">Por favor ingresa un número telefónico válido (10 dígitos)</div>
+        </div>
+
         <div class="form-group">
           <label for="adults" class="form-label">Número de adultos:</label>
-          <input type="number" id="adults" min="1" value="1" required>
+          <input id="adults" name="adults" type="number" min="1" value="1" required />
+          <div class="error-message" id="adultsError">Debe haber al menos 1 adulto</div>
         </div>
+
         <div class="form-group">
           <label for="children" class="form-label">Número de niños:</label>
-          <input type="number" id="children" min="0" value="0" required>
+          <input id="children" name="children" type="number" min="0" value="0" required />
+          <div class="error-message" id="childrenError">El número de niños no puede ser negativo</div>
         </div>
-        <button type="submit" class="submit-btn">Enviar confirmación</button>
-        <div class="loading-spinner" id="loadingSpinner"></div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Enviar confirmación</button>
+        <div class="loading-spinner" id="loadingSpinner" aria-hidden="true"></div>
       </form>
-      <div id="thankYouMessage" class="success">¡Gracias por confirmar!</div>
+
+      <div id="thankYouMessage" class="success" aria-live="polite">¡Gracias por confirmar!</div>
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <!-- Footer dinámico simple (fecha/hora al cargar) -->
+  <footer>
+    Versión <strong>1.0.8</strong> — <time id="fechaPublicacion"></time>
+  </footer>
+
+  <!-- Firebase compat (dejo como en el resto) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
+
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyAG1fFh_ZwN4hSYe-1v-yxqsW4WWjyjkl4",
-      authDomain: "confirmaciones-jimena.firebaseapp.com",
-      projectId: "confirmaciones-jimena",
-      storageBucket: "confirmaciones-jimena.appspot.com",
-      messagingSenderId: "669569632299",
-      appId: "1:669569632299:web:6d64c8d1f476582817826e",
-      measurementId: "G-JY78XDX885"
+      apiKey: "AIzaSyCTh8kPdvu-6Z5_cckNts22VrhdUTLVspM",
+      authDomain: "invitea-f7331.firebaseapp.com",
+      projectId: "invitea-f7331",
+      storageBucket: "invitea-f7331.firebasestorage.app",
+      messagingSenderId: "145115727672",
+      appId: "1:145115727672:web:d1d89c20bf946b9e2663cd",
+      measurementId: "G-8JS1MDZVGQ"
     };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
 
-    function getLocationAndNavigate(destination) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            const url = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${destination}&travelmode=driving`;
-            window.open(url, '_blank');
-          },
-          (error) => {
-            console.error("Error obteniendo ubicación:", error);
-            window.open(`https://www.google.com/maps/search/?api=1&query=${destination}`, '_blank');
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-          }
-        );
-      } else {
-        window.open(`https://www.google.com/maps/search/?api=1&query=${destination}`, '_blank');
+    // Datos de la galería - imágenes específicas para primera comunión
+    const galleryImages = [
+      {
+        url: "https://images.unsplash.com/photo-1571898224256-216d7db02223?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "Mi hermoso vestido de comunión"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "Preparándome para este día especial"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1511984804822-e16ba72f5848?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "El pastel que compartiremos juntos"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1519225421984-5157d7f14cac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "La decoración de nuestra celebración"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1571898224256-216d7db02223?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "Mis clases de catecismo"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "El ramo de flores para la Virgen"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1511984804822-e16ba72f5848?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        caption: "Los recuerdos para mis invitados"
       }
+    ];
+
+    // Preload de imagen para mejor rendimiento
+    function preloadImage(url) {
+      const img = new Image();
+      img.src = url;
     }
 
-    function openModal() {
-      const modal = document.getElementById('rsvpModal');
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+    // Función para obtener la fecha de mañana
+    function getTomorrowDate() {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      return tomorrow;
     }
-    
-    function closeModal() {
-      const modal = document.getElementById('rsvpModal');
-      modal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-      setTimeout(() => {
-        document.getElementById('thankYouMessage').style.display = 'none';
-        document.getElementById('rsvpForm').style.display = 'block';
-        document.getElementById('rsvpForm').reset();
-        document.getElementById('adults').value = 1;
-        document.getElementById('children').value = 0;
-      }, 300);
+
+    // Función para formatear la fecha en español
+    function formatDateSpanish(date) {
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      };
+      
+      let formatted = date.toLocaleDateString('es-ES', options);
+      
+      // Capitalizar la primera letra de cada palabra
+      formatted = formatted.replace(/\b\w/g, l => l.toUpperCase());
+      
+      return formatted;
     }
-    
-    document.getElementById('rsvpModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeModal();
-      }
-    });
-    
-    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+
+    // Función para la cuenta regresiva
+    function startCountdown() {
+      // Fecha del evento: mañana a las 13:00 (hora de la ceremonia)
+      const tomorrow = getTomorrowDate();
+      const eventDate = new Date(tomorrow);
+      eventDate.setHours(13, 0, 0, 0); // 13:00 hrs
       
-      const name = document.getElementById('name').value.trim();
-      const adults = parseInt(document.getElementById('adults').value);
-      const children = parseInt(document.getElementById('children').value);
-      const userAgent = navigator.userAgent;
-      const screenSize = `${window.innerWidth}x${window.innerHeight}`;
-      
-      if (name.length < 3) {
-        alert("Por favor ingresa tu nombre completo");
-        return;
-      }
-      
-      if (adults < 1) {
-        alert("Debe haber al menos 1 adulto");
-        return;
-      }
-      
-      if (children < 0) {
-        alert("El número de niños no puede ser negativo");
-        return;
-      }
-      
-      document.getElementById('loadingSpinner').style.display = 'block';
-      
-      db.collection("confirmaciones").add({
-        nombre: name,
-        adultos: adults,
-        niños: children,
-        dispositivo: userAgent,
-        pantalla: screenSize,
-        fecha: new Date().toLocaleString('es-MX'),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(() => {
-        document.getElementById('rsvpForm').style.display = 'none';
-        document.getElementById('thankYouMessage').style.display = 'block';
-        document.getElementById('loadingSpinner').style.display = 'none';
+      // Actualizar la cuenta cada segundo
+      const countdownTimer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
         
-        setTimeout(closeModal, 1500);
-      })
-      .catch((error) => {
-        document.getElementById('loadingSpinner').style.display = 'none';
-        alert("Ocurrió un error al guardar. Intenta nuevamente.");
-        console.error("Error al guardar en Firebase:", error);
+        // Si ya pasó la fecha, mostrar mensaje
+        if (distance < 0) {
+          clearInterval(countdownTimer);
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          document.getElementById("countdown-message").textContent = "¡El gran día ha llegado!";
+          return;
+        }
+        
+        // Cálculos de tiempo
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        // Mostrar resultados
+        document.getElementById("days").textContent = days.toString().padStart(2, '0');
+        document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+        
+        // Mensajes según el tiempo restante
+        const messageElement = document.getElementById("countdown-message");
+        if (days === 0 && hours < 24) {
+          messageElement.textContent = "¡Hoy es el gran día!";
+        } else if (days === 0) {
+          messageElement.textContent = "¡Falta menos de un día!";
+        } else if (days === 1) {
+          messageElement.textContent = "¡Mañana es el gran día!";
+        } else if (days < 7) {
+          messageElement.textContent = "¡Ya casi es el gran día!";
+        } else {
+          messageElement.textContent = "¡Nos vemos pronto!";
+        }
+      }, 1000);
+    }
+
+    // Función para inicializar la galería Cover Flow mejorada
+    function initCoverflowGallery() {
+      const track = document.getElementById('coverflowTrack');
+      const prevBtn = document.getElementById('coverflowPrev');
+      const nextBtn = document.getElementById('coverflowNext');
+      const dotsContainer = document.getElementById('coverflowDots');
+      const counter = document.getElementById('coverflowCounter');
+      
+      let currentIndex = 0;
+      const totalItems = galleryImages.length;
+      const itemWidth = 200;
+      const itemSpacing = 80;
+      const centerOffset = 0;
+      
+      // Crear elementos de la galería
+      galleryImages.forEach((image, index) => {
+        // Crear elemento de imagen
+        const item = document.createElement('div');
+        item.className = 'coverflow-item';
+        item.setAttribute('data-index', index);
+        
+        const img = document.createElement('img');
+        img.src = image.url;
+        img.alt = image.caption;
+        img.className = 'coverflow-image';
+        img.loading = 'lazy';
+        
+        // Crear reflejo
+        const reflection = document.createElement('div');
+        reflection.className = 'coverflow-reflection';
+        
+        item.appendChild(img);
+        item.appendChild(reflection);
+        track.appendChild(item);
+        
+        // Crear dot
+        const dot = document.createElement('div');
+        dot.className = 'coverflow-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.setAttribute('data-index', index);
+        dotsContainer.appendChild(dot);
+        
+        // Preload de imagen
+        preloadImage(image.url);
       });
-    });
-
-    // Mejora para la experiencia táctil en inputs
-    document.addEventListener('DOMContentLoaded', function() {
-      const inputs = document.querySelectorAll('input');
-      inputs.forEach(input => {
-        input.addEventListener('touchstart', function(e) {
-          e.stopPropagation();
-        }, { passive: true });
+      
+      // Actualizar posición de los elementos
+      function updateCoverflow() {
+        const items = track.querySelectorAll('.coverflow-item');
+        const dots = dotsContainer.querySelectorAll('.coverflow-dot');
         
-        // Opcional: mejorar el enfoque en móviles
-        input.addEventListener('focus', function() {
-          this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        items.forEach((item, index) => {
+          const position = index - currentIndex;
+          const distance = Math.abs(position);
+          
+          // Calcular posición X
+          let x = position * (itemWidth + itemSpacing);
+          
+          // Efectos 3D y escalado
+          let scale = 1;
+          let zIndex = 1;
+          let opacity = 1;
+          let rotation = 0;
+          
+          if (position === 0) {
+            // Imagen central - más grande y enfocada
+            scale = 1.1;
+            zIndex = 10;
+            opacity = 1;
+            rotation = 0;
+            item.classList.add('active');
+          } else if (distance === 1) {
+            // Imágenes adyacentes
+            scale = 0.9;
+            zIndex = 5;
+            opacity = 0.8;
+            rotation = position * 5;
+          } else if (distance === 2) {
+            // Imágenes más lejanas
+            scale = 0.7;
+            zIndex = 3;
+            opacity = 0.5;
+            rotation = position * 10;
+          } else {
+            // Imágenes fuera de vista
+            scale = 0.5;
+            zIndex = 1;
+            opacity = 0.3;
+            rotation = position * 15;
+          }
+          
+          // Aplicar transformaciones
+          item.style.transform = `translateX(${x}px) scale(${scale}) rotateY(${rotation}deg)`;
+          item.style.zIndex = zIndex;
+          item.style.opacity = opacity;
+          
+          // Quitar clase active de otras imágenes
+          if (position !== 0) {
+            item.classList.remove('active');
+          }
+        });
+        
+        // Actualizar dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+        
+        // Actualizar contador
+        counter.textContent = `${currentIndex + 1} / ${totalItems}`;
+        
+        // Actualizar estado de los botones
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === totalItems - 1;
+      }
+      
+      // Navegación
+      function goToSlide(index) {
+        currentIndex = index;
+        updateCoverflow();
+      }
+      
+      function nextSlide() {
+        if (currentIndex < totalItems - 1) {
+          currentIndex++;
+          updateCoverflow();
+        }
+      }
+      
+      function prevSlide() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCoverflow();
+        }
+      }
+      
+      // Event listeners
+      prevBtn.addEventListener('click', prevSlide);
+      nextBtn.addEventListener('click', nextSlide);
+      
+      // Navegación por dots
+      dotsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('coverflow-dot')) {
+          const index = parseInt(e.target.getAttribute('data-index'));
+          goToSlide(index);
+        }
+      });
+      
+      // Navegación por teclado
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+      });
+      
+      // Swipe para móviles
+      let startX = 0;
+      track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+      
+      track.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) { // Umbral mínimo para considerar swipe
+          if (diff > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+      });
+      
+      // Inicializar
+      updateCoverflow();
+      
+      return {
+        goToSlide,
+        nextSlide,
+        prevSlide,
+        getCurrentIndex: () => currentIndex
+      };
+    }
+
+    // Función para inicializar el modal de galería
+    function initGalleryModal(coverflow) {
+      const galleryModal = document.getElementById('galleryModal');
+      const galleryModalImage = document.getElementById('galleryModalImage');
+      const galleryModalCaption = document.getElementById('galleryModalCaption');
+      const closeGalleryModal = document.getElementById('closeGalleryModal');
+      const modalPrev = document.getElementById('modalPrev');
+      const modalNext = document.getElementById('modalNext');
+      
+      // Abrir modal al hacer clic en una imagen del coverflow
+      document.querySelectorAll('.coverflow-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const index = parseInt(this.getAttribute('data-index'));
+          coverflow.goToSlide(index);
+          openModal(index);
         });
       });
+      
+      function openModal(index) {
+        const imageData = galleryImages[index];
+        galleryModalImage.src = imageData.url;
+        galleryModalCaption.textContent = imageData.caption;
+        galleryModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Guardar índice actual para navegación en el modal
+        galleryModal.currentIndex = index;
+      }
+      
+      function closeModal() {
+        galleryModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      function modalNextImage() {
+        if (galleryModal.currentIndex < galleryImages.length - 1) {
+          galleryModal.currentIndex++;
+          openModal(galleryModal.currentIndex);
+          coverflow.goToSlide(galleryModal.currentIndex);
+        }
+      }
+      
+      function modalPrevImage() {
+        if (galleryModal.currentIndex > 0) {
+          galleryModal.currentIndex--;
+          openModal(galleryModal.currentIndex);
+          coverflow.goToSlide(galleryModal.currentIndex);
+        }
+      }
+      
+      // Event listeners
+      closeGalleryModal.addEventListener('click', closeModal);
+      modalPrev.addEventListener('click', modalPrevImage);
+      modalNext.addEventListener('click', modalNextImage);
+      
+      // Cerrar modal al hacer clic fuera de la imagen
+      galleryModal.addEventListener('click', function(e) {
+        if (e.target === galleryModal) {
+          closeModal();
+        }
+      });
+      
+      // Navegación con teclado en el modal
+      document.addEventListener('keydown', function(e) {
+        if (galleryModal.classList.contains('active')) {
+          if (e.key === 'Escape') closeModal();
+          if (e.key === 'ArrowLeft') modalPrevImage();
+          if (e.key === 'ArrowRight') modalNextImage();
+        }
+      });
+    }
+
+    window.addEventListener('load', () => {
+      // Preload de la imagen principal
+      preloadImage('https://i.ibb.co/MyswS4v6/image.jpg');
+      
+      // Establecer fecha dinámica (mañana)
+      const tomorrow = getTomorrowDate();
+      const formattedDate = formatDateSpanish(tomorrow);
+      document.getElementById('dynamicDate').textContent = formattedDate;
+      
+      // Iniciar cuenta regresiva
+      startCountdown();
+      
+      // Inicializar galería Cover Flow mejorada
+      const coverflow = initCoverflowGallery();
+      
+      // Inicializar modal de galería
+      initGalleryModal(coverflow);
+      
+      if (window.firebase && firebase.initializeApp) {
+        try { 
+          firebase.initializeApp(firebaseConfig); 
+          window.db = firebase.firestore(); 
+        }
+        catch(e) { console.warn('Firebase init:', e); }
+      } else console.warn('Firebase no cargó correctamente.');
+
+      // footer fecha/hora al cargar
+      document.getElementById('fechaPublicacion').textContent =
+        new Date().toLocaleString('es-MX', { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
     });
+
+    // El resto del código para el modal de confirmación permanece igual...
+    // ... (código del modal de confirmación se mantiene igual)
   </script>
 </body>
 </html>
