@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Primera Comunión y Cumpleaños</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos generales optimizados para iPhone */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f9f5f1;
+      margin: 0;
+      padding: 0;
+      color: #444;
+      -webkit-text-size-adjust: 100%;
+    }
+    .invitation-container {
+      max-width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      background: white;
+      min-height: 100vh;
+      position: relative;
+    }
+    .header-section {
+      padding: 20px 15px 0;
+      background: linear-gradient(to bottom, #f9f5f1, white 30%);
+    }
+    .communion-image {
+      width: 85%;
+      max-width: 280px;
+      margin: 0 auto 15px;
+      border-radius: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .invitation-heading {
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #8e6c88;
+      margin-bottom: 5px;
+    }
+    .first-word {
+      font-family: 'Parisienne', cursive;
+      font-size: 50px;
+      color: #8e6c88;
+      line-height: 1;
+      display: block;
+    }
+    .second-word {
+      font-family: 'Parisienne', cursive;
+      font-size: 36px;
+      color: #8e6c88;
+      margin-top: -8px;
+      display: block;
+    }
+    .child-name {
+      font-family: 'Parisienne', cursive;
+      font-size: 48px;
+      color: #8e6c88;
+      margin: 5px 0 10px;
+      line-height: 1.1;
+    }
+    .event-date {
+      font-size: 15px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #5a4a5a;
+      padding: 12px 0;
+      border-top: 1px solid #f0e6d6;
+      border-bottom: 1px solid #f0e6d6;
+      max-width: 90%;
+      margin: 20px auto;
+      letter-spacing: 0.5px;
+    }
+    .event-card {
+      max-width: 90%;
+      margin: 15px auto;
+      padding: 15px 0;
+      background: rgba(240,230,214,0.15);
+      border-top: 1px solid #f0e6d6;
+      border-bottom: 1px solid #f0e6d6;
+    }
+    .event-type {
+      font-weight: 600;
+      font-size: 14px;
+      color: #3a2e3a;
+      margin-bottom: 3px;
+    }
+    .event-time {
+      font-size: 14px;
+      color: #5a5a5a;
+      margin-bottom: 5px;
+    }
+    .event-location {
+      font-style: italic;
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .map-button, .confirm-button {
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      margin: 10px auto;
+      display: inline-block;
+      width: auto;
+      min-width: 180px;
+    }
+    .map-button {
+      background-color: rgba(107, 142, 122, 0.9);
+      color: white;
+    }
+    .confirm-button {
+      background-color: rgba(142, 108, 136, 0.9);
+      color: white;
+      margin-bottom: 30px;
+    }
+    .map-button:active, .confirm-button:active {
+      transform: scale(0.96);
+    }
+    
+    /* Estilos del modal ultra compacto */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-content {
+      background: white;
+      padding: 18px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 280px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      border-top: 3px solid #8e6c88;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+    .close-modal {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 18px;
+      color: #8e6c88;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .modal-title {
+      margin-bottom: 15px;
+      font-family: 'Parisienne', cursive;
+      font-size: 22px;
+      color: #8e6c88;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #5a4a5a;
+      font-weight: 500;
+    }
+    .modal-content input {
+      width: 100%;
+      background-color: #f9f5f1;
+      border: 1px solid #e0d5c8;
+      border-radius: 6px;
+      padding: 12px 15px;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 10px;
+      font-size: 14px;
+      -webkit-appearance: none;
+    }
+    .modal-content input:focus {
+      outline: none;
+      border-color: #8e6c88;
+      box-shadow: 0 0 0 2px rgba(142, 108, 136, 0.2);
+    }
+    .modal-content input::placeholder {
+      color: #5a4a5a;
+      opacity: 0.8;
+    }
+    .success {
+      font-family: 'Parisienne', cursive;
+      font-size: 20px;
+      color: #8e6c88;
+      margin: 15px 0;
+      text-align: center;
+      display: none;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      background-color: rgba(142, 108, 136, 0.9);
+      color: white;
+      font-weight: 500;
+      margin-top: 5px;
+    }
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+    .loading-spinner {
+      display: none;
+      width: 24px;
+      height: 24px;
+      margin: 10px auto;
+      border: 3px solid rgba(142, 108, 136, 0.3);
+      border-radius: 50%;
+      border-top-color: #8e6c88;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="invitation-container">
+    <div class="header-section">
+      <div class="invitation-heading">Acompáñame a celebrar mi</div>
+      <div class="event-title">
+        <span class="first-word">Primera Comunión</span>
+        <span class="second-word">& mis 9 años</span>
+      </div>
+      <img src="https://i.ibb.co/MyswS4v6/image.jpg" alt="Jimena en su Primera Comunión" class="communion-image">
+      <div class="child-name">Jimena López Gaona</div>
+    </div>
+    <div class="content-section">
+      <div class="event-date">Sábado 26 de Julio de 2025</div>
+      <div class="event-card">
+        <div class="event-type">Ceremonia</div>
+        <div class="event-time">13:00 hrs</div>
+        <div class="event-location">Parroquia<br>Nuestra Señora de Guadalupe</div>
+        <button class="map-button" onclick="getLocationAndNavigate('Parroquia+Nuestra+Señora+de+Guadalupe,+8WP9+MV,+Ciudad+de+México')">Cómo llegar</button>
+      </div>
+      <div class="event-card">
+        <div class="event-type">Recepción</div>
+        <div class="event-time">15:00 hrs</div>
+        <div class="event-location">Salón de Fiestas<br>El Arca de los Niños</div>
+        <button class="map-button" onclick="getLocationAndNavigate('Salón+de+Fiestas+El+Arca+de+los+Niños,+8WP9+MV,+Ciudad+de+México')">Cómo llegar</button>
+      </div>
+      
+      <button class="confirm-button" onclick="openModal()">Confirma asistencia</button>
+    </div>
+  </div>
+
+  <!-- Modal con labels externos -->
+  <div id="rsvpModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+      <div class="modal-title">Confirma tu asistencia</div>
+      <form id="rsvpForm">
+        <div class="form-group">
+          <label for="name" class="form-label">Nombre(s) y apellido(s):</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="adults" class="form-label">Número de adultos:</label>
+          <input type="number" id="adults" min="1" value="1" required>
+        </div>
+        <div class="form-group">
+          <label for="children" class="form-label">Número de niños:</label>
+          <input type="number" id="children" min="0" value="0" required>
+        </div>
+        <button type="submit" class="submit-btn">Enviar confirmación</button>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+      </form>
+      <div id="thankYouMessage" class="success">¡Gracias por confirmar!</div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAG1fFh_ZwN4hSYe-1v-yxqsW4WWjyjkl4",
+      authDomain: "confirmaciones-jimena.firebaseapp.com",
+      projectId: "confirmaciones-jimena",
+      storageBucket: "confirmaciones-jimena.appspot.com",
+      messagingSenderId: "669569632299",
+      appId: "1:669569632299:web:6d64c8d1f476582817826e",
+      measurementId: "G-JY78XDX885"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function getLocationAndNavigate(destination) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${destination}&travelmode=driving`;
+            window.open(url, '_blank');
+          },
+          (error) => {
+            console.error("Error obteniendo ubicación:", error);
+            window.open(`https://www.google.com/maps/search/?api=1&query=${destination}`, '_blank');
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+          }
+        );
+      } else {
+        window.open(`https://www.google.com/maps/search/?api=1&query=${destination}`, '_blank');
+      }
+    }
+
+    function openModal() {
+      const modal = document.getElementById('rsvpModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById('rsvpModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      setTimeout(() => {
+        document.getElementById('thankYouMessage').style.display = 'none';
+        document.getElementById('rsvpForm').style.display = 'block';
+        document.getElementById('rsvpForm').reset();
+        document.getElementById('adults').value = 1;
+        document.getElementById('children').value = 0;
+      }, 300);
+    }
+    
+    document.getElementById('rsvpModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+    
+    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const adults = parseInt(document.getElementById('adults').value);
+      const children = parseInt(document.getElementById('children').value);
+      const userAgent = navigator.userAgent;
+      const screenSize = `${window.innerWidth}x${window.innerHeight}`;
+      
+      if (name.length < 3) {
+        alert("Por favor ingresa tu nombre completo");
+        return;
+      }
+      
+      if (adults < 1) {
+        alert("Debe haber al menos 1 adulto");
+        return;
+      }
+      
+      if (children < 0) {
+        alert("El número de niños no puede ser negativo");
+        return;
+      }
+      
+      document.getElementById('loadingSpinner').style.display = 'block';
+      
+      db.collection("confirmaciones").add({
+        nombre: name,
+        adultos: adults,
+        niños: children,
+        dispositivo: userAgent,
+        pantalla: screenSize,
+        fecha: new Date().toLocaleString('es-MX'),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        document.getElementById('rsvpForm').style.display = 'none';
+        document.getElementById('thankYouMessage').style.display = 'block';
+        document.getElementById('loadingSpinner').style.display = 'none';
+        
+        setTimeout(closeModal, 1500);
+      })
+      .catch((error) => {
+        document.getElementById('loadingSpinner').style.display = 'none';
+        alert("Ocurrió un error al guardar. Intenta nuevamente.");
+        console.error("Error al guardar en Firebase:", error);
+      });
+    });
+
+    // Mejora para la experiencia táctil en inputs
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener('touchstart', function(e) {
+          e.stopPropagation();
+        }, { passive: true });
+        
+        // Opcional: mejorar el enfoque en móviles
+        input.addEventListener('focus', function() {
+          this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
