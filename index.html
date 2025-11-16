@@ -239,6 +239,64 @@
     }
     .coverflow-counter { font-size: 14px; color: var(--muted-text); margin-top: 8px; font-weight: 500; }
 
+    /* Código de Vestimenta */
+    .dresscode-container {
+      max-width: 92%; margin: 14px auto; padding: 14px 12px;
+      background: rgba(240,230,214,0.12); border-top: 1px solid var(--muted);
+      border-bottom: 1px solid var(--muted); border-radius: 10px; text-align: center;
+      display: block; transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+    .dresscode-container::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--accent); opacity: 0.7;
+    }
+    .dresscode-container:hover {
+      transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .dresscode-title { 
+      font-weight: 600; font-size: 14px; color: #3a2e3a; margin-bottom: 6px;
+      position: relative; display: inline-block;
+    }
+    .dresscode-title::after {
+      content: ""; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--muted);
+    }
+
+    .dresscode-icons {
+      display: flex; justify-content: center; gap: 40px; margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .dresscode-item {
+      display: flex; flex-direction: column; align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .dresscode-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .dresscode-icon {
+      width: 80px; height: 80px; background: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--accent); margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(142,108,136,0.2);
+    }
+
+    .dresscode-icon svg {
+      width: 40px; height: 40px; fill: var(--accent);
+    }
+
+    .dresscode-label {
+      font-size: 14px; color: var(--text); font-weight: 500;
+    }
+
+    .dresscode-note {
+      font-size: 13px; color: var(--muted-text); font-style: italic;
+      margin-top: 10px; max-width: 80%; margin-left: auto; margin-right: auto;
+    }
+
     /* Itinerario */
     .itinerario-container {
       max-width: 92%; margin: 14px auto; padding: 14px 12px;
@@ -441,6 +499,7 @@
         width: calc(100% - 80px); margin-left: 80px; text-align: left !important;
       }
       .timeline-icon { left: 30px; transform: translate(-50%, -50%); }
+      .dresscode-icons { gap: 20px; }
     }
     @media (max-width:480px){
       .coverflow-container { height: 240px; }
@@ -454,6 +513,8 @@
       .timeline-content { width: calc(100% - 60px); margin-left: 60px; }
       .timeline-icon { width: 30px; height: 30px; left: 30px; }
       .timeline-icon svg { width: 16px; height: 16px; }
+      .dresscode-icon { width: 60px; height: 60px; }
+      .dresscode-icon svg { width: 30px; height: 30px; }
     }
   </style>
 </head>
@@ -527,6 +588,34 @@
         <div id="regalos" class="event-type">Mesa de Regalos</div>
         <div class="event-location">Si deseas tener un detalle conmigo, puedes visitar mi mesa de regalos en Liverpool</div>
         <a class="gift-button" href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51780014" target="_blank" rel="noopener noreferrer">Ver Regalos</a>
+      </div>
+
+      <!-- Código de Vestimenta -->
+      <div class="dresscode-container" aria-labelledby="dresscode">
+        <div id="dresscode" class="dresscode-title">Código de Vestimenta</div>
+        <div class="dresscode-icons">
+          <div class="dresscode-item">
+            <div class="dresscode-icon">
+              <svg viewBox="0 0 24 24">
+                <!-- Icono de saco formal para caballeros -->
+                <path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 15H4v-2h4v1h2v-1h4v1h2v-1h4v2zm0-5H4V8h3v1h2V8h6v1h2V8h3v6z"/>
+                <path d="M7 15h2v2H7zM15 15h2v2h-2z"/>
+              </svg>
+            </div>
+            <div class="dresscode-label">Traje Formal</div>
+          </div>
+          <div class="dresscode-item">
+            <div class="dresscode-icon">
+              <svg viewBox="0 0 24 24">
+                <!-- Icono de vestido elegante para damas -->
+                <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-9 12c-2.76 0-5-2.24-5-5h2c0 1.66 1.34 3 3 3s3-1.34 3-3h2c0 2.76-2.24 5-5 5z"/>
+                <path d="M9 8h6v2H9z"/>
+              </svg>
+            </div>
+            <div class="dresscode-label">Vestido Elegante</div>
+          </div>
+        </div>
+        <div class="dresscode-note">Vestimenta formal - Etiqueta de gala para esta ocasión especial</div>
       </div>
 
       <!-- Itinerario -->
