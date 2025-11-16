@@ -1639,7 +1639,7 @@
       async checkEmailExists(email) {
         if (!email || !this.isValidEmail(email)) return false;
         try {
-          const snapshot = await window.db.collection('julianaypedro_boda')
+          const snapshot = await window.db.collection('mariayjose_boda')
             .where('email', '==', email.toLowerCase().trim()).get();
           return !snapshot.empty;
         } catch (error) {
