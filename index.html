@@ -50,6 +50,93 @@
         radial-gradient(circle at 90% 80%, rgba(232, 227, 219, 0.3) 0%, transparent 20%);
     }
 
+    /* ========== HEADER ESTILO BODA ========== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: linear-gradient(180deg, rgba(248,246,242,0.95), rgba(255,255,255,0.98));
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* Logo link */
+    .logo-link {
+      text-decoration: none;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    
+    .logo-link:active {
+      transform: scale(0.95);
+    }
+
+    .logo {
+      width: 120px;
+      height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(139, 115, 85, 0.5);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      box-shadow: 0 0 10px rgba(139, 115, 85, 0.25);
+      border-color: var(--accent);
+    }
+
+    .logo-text {
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      transition: transform 0.2s ease;
+      color: var(--accent);
+    }
+
+    .social-link:hover {
+      transform: translateY(-2px);
+      background: rgba(139, 115, 85, 0.1);
+      box-shadow: 0 0 8px rgba(139, 115, 85, 0.2);
+    }
+
+    .social-icon {
+      width: 16px;
+      height: 16px;
+    }
+
     /* Elementos decorativos actualizados */
     .decoration {
       position: absolute;
@@ -865,6 +952,71 @@
       box-shadow: 0 5px 12px rgba(154,139,118,0.4);
     }
 
+    /* ========== FOOTER ESTILO BODA ========== */
+    footer {
+      padding: 30px 20px 20px;
+      background: linear-gradient(0deg, var(--bg) 0%, var(--card-bg) 100%);
+      border-top: 1px solid var(--muted);
+      margin-top: 40px;
+    }
+
+    /* Sección Promocional Centrada */
+    .footer-promo {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--muted);
+    }
+
+    .footer-promo p {
+      color: var(--muted-text);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    /* Botón Outline para venta */
+    .btn-cotizar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 25px;
+      border: 1px solid var(--accent);
+      border-radius: 50px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cotizar:hover {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 15px rgba(139, 115, 85, 0.25);
+    }
+
+    /* Copyright alineado a la derecha como el original */
+    .footer-copyright {
+      text-align: right;
+      font-size: 11px;
+      color: var(--muted-text);
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    
+    .footer-copyright a {
+      color: var(--accent-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-copyright a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
     /* Modal de galería actualizado */
     .gallery-modal {
       position: fixed;
@@ -1137,15 +1289,6 @@
       animation: pulse 1.5s infinite;
     }
 
-    footer {
-      text-align: center;
-      padding: 12px 6px;
-      font-size: 12px;
-      color: var(--muted-text);
-      background: transparent;
-      border-top: 1px solid var(--muted);
-    }
-
     :focus {
       outline: 3px solid var(--focus-ring);
       outline-offset: 2px;
@@ -1209,6 +1352,11 @@
       .timeline-icon { left: 30px; transform: translate(-50%, -50%); }
       .dresscode-icons { gap: 20px; }
       .hotels-grid { gap: 20px; }
+      
+      /* En móviles, centrar el copyright para que se vea mejor */
+      .footer-copyright {
+        text-align: center;
+      }
     }
 
     @media (max-width:480px) {
@@ -1226,11 +1374,36 @@
       .dresscode-icon { width: 60px; height: 60px; }
       .dresscode-icon svg { width: 30px; height: 30px; }
       .hotel-card { min-width: 100%; }
+      .header-content { padding: 10px 12px; }
+      .logo { width: 100px; height: 30px; }
+      .logo-text { font-size: 14px; }
     }
   </style>
 </head>
 
 <body>
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="header-content">
+      <div class="logo-container">
+        <a href="https://invitea.github.io/home_page/" target="_blank" class="logo-link" aria-label="Ir a Invitéa">
+          <div class="logo">
+            <div class="logo-text">Invitéa</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Facebook">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
   <!-- Elementos decorativos -->
   <div class="decoration circle"></div>
   <div class="decoration flower"></div>
@@ -1313,7 +1486,7 @@
           Avenida Siempre Viva 742, Col. Centro<br/>
           Ciudad de México, CDMX
         </div>
-        <a class="map-button" href="https://www.google.com/maps/search/?api=1&query=Avenida+Siempre+Viva+742%2C+Col.+Centro%2C+Ciudad+de+M%C3%A9xico%2C+CDMX" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+        <a class="map-button" href="https://www.google.comm/maps/search/?api=1&query=Avenida+Siempre+Viva+742%2C+Col.+Centro%2C+Ciudad+de+M%C3%A9xico%2C+CDMX" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
       </div>
 
       <!-- Mesa de Regalos -->
@@ -1477,6 +1650,22 @@
     </div>
   </div>
 
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="footer-promo">
+      <p>¿Te gustó esta invitación?</p>
+      
+      <a href="https://invitea.github.io/home_page/" target="_blank" class="btn-cotizar">
+        <span>✨</span> Diseña tu evento con Invitéa
+      </a>
+    </div>
+
+    <div class="footer-copyright">
+      © 2025 Invitea — Todos los derechos reservados<br/>
+      <a href="#contacto">Contacto</a> · <a href="mailto:invitea.design@gmail.com">invitea.design@gmail.com</a>
+    </div>
+  </footer>
+
   <!-- Modal de galería -->
   <div id="galleryModal" class="gallery-modal">
     <div class="gallery-modal-content">
@@ -1533,10 +1722,6 @@
       <div id="thankYouMessage" class="success" aria-live="polite">¡Gracias por confirmar!</div>
     </div>
   </div>
-
-  <footer>
-    Versión <strong>1.0.8</strong> — <time id="fechaPublicacion"></time>
-  </footer>
 
   <!-- Scripts externos -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
@@ -2252,16 +2437,6 @@
       } else {
         console.warn('Firebase no cargó correctamente.');
       }
-
-      // Configurar fecha de publicación
-      document.getElementById('fechaPublicacion').textContent =
-        new Date().toLocaleString('es-MX', {
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
     });
   </script>
 </body>
