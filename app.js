@@ -179,11 +179,7 @@ const gallery = {
       img.className = 'coverflow-image';
       img.loading = 'lazy';
       
-      const reflection = document.createElement('div');
-      reflection.className = 'coverflow-reflection';
-      
       item.appendChild(img);
-      item.appendChild(reflection);
       this.track.appendChild(item);
       
       // Crear puntos de navegación
@@ -327,18 +323,20 @@ const modalGallery = {
     this.nextBtn = document.getElementById('modalNext');
     
     this.coverflow = coverflow;
+    this.currentIndex = 0;
     this.setupEventListeners();
   },
   
   // Configurar event listeners
   setupEventListeners() {
     // Abrir modal al hacer clic en una imagen
-    document.querySelectorAll('.coverflow-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const index = parseInt(item.getAttribute('data-index'));
+    document.addEventListener('click', (e) => {
+      const coverflowItem = e.target.closest('.coverflow-item');
+      if (coverflowItem) {
+        const index = parseInt(coverflowItem.getAttribute('data-index'));
         this.coverflow.goToSlide(index);
         this.open(index);
-      });
+      }
     });
     
     // Eventos de cierre y navegación
@@ -681,7 +679,7 @@ const rsvpModal = {
 // =============================================
 // INICIALIZACIÓN
 // =============================================
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   // Pre-cargar imagen principal
   utils.preloadImage('https://images.unsplash.com/photo-1519225421984-5157d7f14cac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');
   
@@ -696,14 +694,15 @@ window.addEventListener('load', () => {
   rsvpModal.init();
   
   // Inicializar Firebase
-  if (window.firebase && firebase.initializeApp) {
+  if (typeof firebase !== 'undefined' && firebase.initializeApp) {
     try {
       firebase.initializeApp(firebaseConfig);
       window.db = firebase.firestore();
+      console.log('Firebase inicializado correctamente');
     } catch(e) {
-      console.warn('Firebase init:', e);
+      console.warn('Error al inicializar Firebase:', e);
     }
   } else {
-    console.warn('Firebase no cargó correctamente.');
+    console.warn('Firebase no está disponible');
   }
 });
